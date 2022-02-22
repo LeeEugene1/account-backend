@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const {User} = require('../mongoose/model')
+const jwt = require('jsonwebtoken')
+const config = require('dotenv').config()
 
 //개별 개시글을 가져오는 라우트
 router.post('/user/login', async (req, res) =>{
@@ -20,7 +22,24 @@ router.post('/user/login', async (req, res) =>{
             msg:'password fail'
         })
     }
-    res.send({email:loginUser.email, nickname:loginUser.nickname, error:false, msg:'login success'})
+
+    const secret = `${process.env.SECRETCODE}`
+    const token = jwt.sign({
+        email:loginUser.email,
+        nickname:loginUser.nickname
+    },secret,{
+        expiresIn:7,
+        issuer:'khacker',
+        subject:'auth',
+    })
+
+    res.send({
+        email:loginUser.email, 
+        nickname:loginUser.nickname,
+        token:token,
+        error:false, 
+        msg:'login success',
+    })
 })
 
 // add user
