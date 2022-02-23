@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {User} = require('../mongoose/model')
 const jwt = require('jsonwebtoken')
-const config = require('dotenv').config()
+const session = require('express-session')
 
 //개별 개시글을 가져오는 라우트
 router.post('/user/login', async (req, res) =>{
@@ -23,16 +23,21 @@ router.post('/user/login', async (req, res) =>{
         })
     }
 
-    const secret = `${process.env.SECRETCODE}`
     const token = jwt.sign({
         email:loginUser.email,
         nickname:loginUser.nickname
-    },secret,{
+    },process.env.SECRETCODE,{
         expiresIn:7,
         issuer:'khacker',
         subject:'auth',
     })
 
+    req.session.is_logined = true
+    req.session.nickname = loginUser.nickname
+    req.session.email = loginUser.email
+    // console.log(req.session)
+    // console.log(loginUser.email)
+    
     res.send({
         email:loginUser.email, 
         nickname:loginUser.nickname,
