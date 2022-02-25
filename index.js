@@ -19,10 +19,8 @@ app.use(session({
 }))
 
 app.get('/',(req,res) =>{
-    console.log(req.session)
-    res.send("success")
+    res.send(req.session)
 })
-
 
 // 기능별 라우터추가
 app.use(article)

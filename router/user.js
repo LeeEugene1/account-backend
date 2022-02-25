@@ -23,14 +23,14 @@ router.post('/user/login', async (req, res) =>{
         })
     }
 
-    const token = jwt.sign({
-        email:loginUser.email,
-        nickname:loginUser.nickname
-    },process.env.SECRETCODE,{
-        expiresIn:7,
-        issuer:'khacker',
-        subject:'auth',
-    })
+    // const token = jwt.sign({
+    //     email:loginUser.email,
+    //     nickname:loginUser.nickname
+    // },process.env.SECRETCODE,{
+    //     expiresIn:7,
+    //     issuer:'khacker',
+    //     subject:'auth',
+    // })
 
     req.session.is_logined = true
     req.session.nickname = loginUser.nickname
@@ -39,9 +39,17 @@ router.post('/user/login', async (req, res) =>{
     // console.log(loginUser.email)
     
     res.send({
-        email:loginUser.email, 
-        nickname:loginUser.nickname,
-        token:token,
+        //jwt
+        // email:loginUser.email, 
+        // nickname:loginUser.nickname,
+        // token:token,
+        // is_logined:true,
+
+        //세션
+        is_logined:req.session.is_logined,
+        nickname:req.session.nickname,
+        email:req.session.email,
+        
         error:false, 
         msg:'login success',
     })
