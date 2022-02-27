@@ -8,9 +8,9 @@ const session = require('express-session')
 router.post('/user/login', async (req, res) =>{
     const {email, password} = req.body
     const loginUser = await User.findOne({email:email})
-    // console.log(loginUser)
     if(!loginUser){
         return res.send({
+            status:404,
             error:true,
             msg:'there is no email address'
         })
@@ -18,6 +18,7 @@ router.post('/user/login', async (req, res) =>{
     const correctPassword = await loginUser.authenticate(password)
     if(!correctPassword){
         return res.send({
+            status:404,
             error:true,
             msg:'password fail'
         })
@@ -49,7 +50,7 @@ router.post('/user/login', async (req, res) =>{
         is_logined:req.session.is_logined,
         nickname:req.session.nickname,
         email:req.session.email,
-        
+        status:200,
         error:false, 
         msg:'login success',
     })
