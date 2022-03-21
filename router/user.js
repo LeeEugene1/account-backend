@@ -95,22 +95,29 @@ router.get("/user/:id", async (req, res) => {
 
 //사용자정보변경
 router.put("/user/update", async (req, res) => {
-  const { nickname, email, password } = req.body;
-  const newUser = await User({
-    email,
-    nickname,
-    password,
-  }).save();
+  const { id, email, nickname, password } = req.body;
+  const updateUser = await User.findOneAndUpdate(
+    {
+      id,
+      email,
+    },
+    {
+      nickname,
+      password,
+    },
+    {
+      new: true, //업데이트된 애를 가져옴
+    }
+  );
 
-  console.log(newUser);
-  // res.send(newUser._id ? true : false)
-  if (!newUser._id) {
-    return res.send({
-      status: 404,
-      error: true,
-      msg: "user id is not created",
-    });
-  }
+  console.log(updateUser);
+  //   if (!updateUser.id) {
+  //     return res.send({
+  //       status: 404,
+  //       error: true,
+  //       msg: "user id is not created",
+  //     });
+  //   }
   res.send({
     status: 200,
     error: false,
