@@ -39,6 +39,13 @@ router.post("/user/login", async (req, res) => {
   // console.log(req.session)
   // console.log(loginUser.email)
 
+  const userInfo = {
+    id: req.session._id,
+    is_logined: req.session.is_logined,
+    nickname: req.session.nickname,
+    email: req.session.email,
+  };
+
   res.send({
     //jwt
     // email:loginUser.email,
@@ -47,10 +54,7 @@ router.post("/user/login", async (req, res) => {
     // is_logined:true,
 
     //세션
-    id: req.session._id,
-    is_logined: req.session.is_logined,
-    nickname: req.session.nickname,
-    email: req.session.email,
+    userInfo,
     status: 200,
     error: false,
     msg: "login success",
@@ -109,7 +113,6 @@ router.put("/user/update", async (req, res) => {
       new: true, //업데이트된 애를 가져옴
     }
   );
-
   console.log(updateUser);
   //   if (!updateUser.id) {
   //     return res.send({
@@ -118,10 +121,17 @@ router.put("/user/update", async (req, res) => {
   //       msg: "user id is not created",
   //     });
   //   }
+  const userInfo = {
+    id: updateUser.id,
+    is_logined: true,
+    nickname: updateUser.nickname,
+    email: email,
+  };
   res.send({
     status: 200,
     error: false,
     msg: "user updated",
+    userInfo,
   });
 });
 

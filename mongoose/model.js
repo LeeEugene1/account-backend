@@ -15,7 +15,7 @@ const model = (()=>{
         ,{useNewUrlParser:true, useUnifiedTopology:true}
         )
     //DOTENV 테스트
-    // console.log(process.env.DB_ID)
+    console.log(process.env.DB_ID)
     
     //스키마 연결
     const model = {};
