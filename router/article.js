@@ -3,11 +3,16 @@ const router = express.Router();
 const { Article, Comment } = require("../mongoose/model");
 
 //개별 개시글을 가져오는 라우트
-router.get("/article/:id", async (req, res) => {
-  const { id } = req.params;
-  const article = await Article.findById(id);
+router.get("/article/:key", async (req, res) => {
+  const { key } = req.params;
+  const article = await Article.findOne({ _id: key })
+    .populate("author")
+    .populate("board");
   const comment = await Comment.find({ article: article._id });
-  res.send({ article, comment });
+  res.send({
+    article,
+    comment,
+  });
 });
 
 //게시판추가

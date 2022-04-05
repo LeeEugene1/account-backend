@@ -8,7 +8,7 @@ GET http://localhost:3000/board/qna HTTP/1.1
 
 ###
 
-GET http://localhost:3000/article/624abdf87f340aea85b93da1 HTTP/1.1
+GET http://localhost:3000/article/624c6ba69e2e7f2876744b8a HTTP/1.1
 
 ###
 
@@ -26,9 +26,9 @@ POST http://localhost:3000/article/create HTTP/1.1
 content-type: application/json
 
 {
-    "author":"61f8161eac714bdf22e4fb1c",
-    "title": "영어는 어느정도 해야할까요?",
-    "content": "안녕하세요 영어는 어느정도해야 해외취업 할수있나요?",
+    "author":"61fa48932b5bc93e0b0f27ee",
+    "title": "저자는 유저",
+    "content": "2안녕하세요 할수있나요?",
     "board": "623d6912df87930d9bdc68eb"
 }
 

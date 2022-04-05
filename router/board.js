@@ -65,7 +65,7 @@ router.get("/board/:slug", async (req, res) => {
       msg: "there is no board",
     });
   }
-  const article = await Article.find({ board: board._id });
+  const article = await Article.find({ board: board._id }).populate("author");
   res.send({ article, error: false, msg: "success" });
 });
 //관리자:보드 추가
