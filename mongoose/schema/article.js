@@ -19,6 +19,6 @@ const Article = new mongoose.Schema({
   mention: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
-Article.plugin(AutoIncrement, { inc_field: "key" }); //id는 1,2,3,4..
+Article.plugin(AutoIncrement, { inc_field: "id" }); //id는 1,2,3,4..
 
 module.exports = Article;

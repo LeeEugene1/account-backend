@@ -1,15 +1,48 @@
 const express = require("express");
 const router = express.Router();
-const { Comment } = require("../mongoose/model");
+const jwt = require("jsonwebtoken");
+const { Article, Comment } = require("../mongoose/model");
 
 //댓글생성
 router.post("/comment/create", async (req, res) => {
   const { author, article, content } = req.body;
+  //   const { article, content } = req.body;
+
+  //   //author을 jwt인증
+  //   const { authorization } = req.header;
+  //   if (!authorization) {
+  //     return res.send({
+  //       error: true,
+  //       msg: "there is no token",
+  //     });
+  //   }
+
+  //   const token = authorization.split(" ")[1];
+  //   const secret = req.app.get("jwt-secret");
+
+  //   jwt.verify(token, secret, async (err, data) => {
+  //     if (err) res.send(err);
+  //     const newComment = await Comment({
+  //       author: data.id,
+  //       article,
+  //       content,
+  //     }).save();
+  //     res.save(newComment._id ? true : false);
+  //   });
   const newComment = await Comment({
     author,
     article,
     content,
   }).save();
+  //comment count++
+  await Article.findOneAndUpdate(
+    {
+      _id: article,
+    },
+    {
+      $inc: { commentCount: 1 }, //increment의 약자
+    }
+  );
   res.send(newComment._id ? true : false);
 });
 

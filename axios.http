@@ -8,6 +8,10 @@ GET http://localhost:3000/board/qna HTTP/1.1
 
 ###
 
+GET http://localhost:3000/article/624abdf87f340aea85b93da1 HTTP/1.1
+
+###
+
 POST http://localhost:3000/board/create HTTP/1.1
 content-type: application/json
 
@@ -59,4 +63,16 @@ content-type: application/json
 {
     "id": "623d7490e1559d411ad15bae",
     "author":"61f8161eac714bdf22e4fb1c"
+}
+
+//댓글
+###
+
+POST http://localhost:3000/comment/create HTTP/1.1
+content-type: application/json
+
+{
+    "author":"61f8161eac714bdf22e4fb1c",
+    "article": "624abdf87f340aea85b93da1",
+    "content": "comment2"
 }
