@@ -72,7 +72,7 @@ POST http://localhost:3000/comment/create HTTP/1.1
 content-type: application/json
 
 {
-    "author":"61f8161eac714bdf22e4fb1c",
-    "article": "624abdf87f340aea85b93da1",
-    "content": "comment2"
+    "author":"6225b98d32838780f5009ca6",
+    "article": "624c6ba69e2e7f2876744b8a",
+    "content": "테스트3"
 }

@@ -8,7 +8,9 @@ router.get("/article/:key", async (req, res) => {
   const article = await Article.findOne({ _id: key })
     .populate("author")
     .populate("board");
-  const comment = await Comment.find({ article: article._id });
+  const comment = await Comment.find({ article: article._id }).populate(
+    "author"
+  );
   res.send({
     article,
     comment,
