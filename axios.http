@@ -74,5 +74,17 @@ content-type: application/json
 {
     "author":"6225b98d32838780f5009ca6",
     "article": "624c6ba69e2e7f2876744b8a",
-    "content": "테스트3"
+    "content": "코멘트입니다."
+}
+
+//대댓글
+###
+
+POST http://localhost:3000/reply/create HTTP/1.1
+content-type: application/json
+
+{
+    "author":"6225b98d32838780f5009ca6",
+    "comment": "6252c2e37f3aeb9458f673e8",
+    "content": "대댓글2입니다.."
 }

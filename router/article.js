@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Article, Comment } = require("../mongoose/model");
+const { Reply, Article, Comment } = require("../mongoose/model");
 
 //개별 개시글을 가져오는 라우트
 router.get("/article/:key", async (req, res) => {
@@ -8,13 +8,38 @@ router.get("/article/:key", async (req, res) => {
   const article = await Article.findOne({ _id: key })
     .populate("author")
     .populate("board");
-  const comment = await Comment.find({ article: article._id }).populate(
+  const commentList = await Comment.find({ article: article._id }).populate(
     "author"
   );
-  res.send({
-    article,
-    comment,
-  });
+  Promise.all(
+    commentList.map(async (each) => {
+      const replies = await Reply.find({ comment: each._doc._id }).populate(
+        "author"
+      );
+      return {
+        ...each._doc,
+        replies: replies,
+      };
+    })
+  )
+    .then((comment) => {
+      res.send({
+        article,
+        comment,
+      });
+    })
+    .catch(() => {});
+
+  //   const comment = commentList.map(async (v) => {
+  //     const replies = await Reply.find({ comment: comment._id }).populate(
+  //       "author"
+  //     );
+  //     console.log(v);
+  //     return {
+  //       ...v,
+  //       replies: replies, //대댓글 배열
+  //     };
+  //   });
 });
 
 //게시판추가

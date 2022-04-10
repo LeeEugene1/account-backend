@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Reply } = require("../mongoose/model");
+const { Comment, Reply } = require("../mongoose/model");
 
 //대댓글생성
 router.post("/reply/create", async (req, res) => {
@@ -10,6 +10,10 @@ router.post("/reply/create", async (req, res) => {
     comment,
     content,
   }).save();
+  const updateCount = await Comment.findOneAndUpdate(
+    { _id: comment },
+    { $inc: { replyCount: 1 } }
+  );
   res.send(newReply._id ? true : false);
 });
 
